@@ -3,18 +3,21 @@
   width: 60px;
   height: 60px;
   bottom: 40px;
-  left: 40px;
+  right: 40px;
   background-color: #25d366;
-  color: #FFF;
-  border-radius: 50px;
+  color: #ffffff;
+  border-radius: 50%;
   text-align: center;
-  font-size: 30px;
+  font-size: 40px;
   box-shadow: 2px 2px 3px #999;
   z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.whatsapp-icon {
-  margin-top: 15px;
+.fa-whatsapp {
+  transform: translate(0, 0); /* Ajusta esta línea si es necesario */
 }
 
 // Adjust the hero section background color to match the logo's background
