@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto según la rama que deseas que dispare este flujo
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/your-image-name:latest
+
+  deploy:
+    name: Deploy to Remote Server
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Executing remote SSH commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          script: |
+            docker login ghcr.io -u ${{ secrets.REMOTE_USER }} -p ${{ secrets.REMOTE_PASSWORD }}
+            docker pull ghcr.io/${{ github.repository_owner }}/your-image-name:latest
+            docker-compose up -d
+            docker image prune -a -f  # Opcional: limpiar imágenes antiguas
+
