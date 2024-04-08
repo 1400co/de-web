@@ -30,7 +30,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/your-image-name:latest
+          tags: ghcr.io/${{ github.repository_owner }}/digital-experts-web:latest
 
   deploy:
     name: Deploy to Remote Server
@@ -44,6 +44,7 @@ jobs:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
           script: |
             docker login ghcr.io -u ${{ secrets.REMOTE_USER }} -p ${{ secrets.REMOTE_PASSWORD }}
             docker pull ghcr.io/${{ github.repository_owner }}/your-image-name:latest
