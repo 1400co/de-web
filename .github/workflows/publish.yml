@@ -27,7 +27,7 @@ jobs:
       - name: Build the project
         run: |
           cd digital-experts-web
-          npm run build -- --prod
+          npm run build 
 
   deploy:
     name: Deploy to Server
