@@ -34,6 +34,9 @@ jobs:
     needs: build  # Este job se ejecutará solo si el job 'build' es exitoso
     runs-on: ubuntu-latest
     steps:
+      - name: visualizar
+        run: echo ${{ secrets.REMOTE_HOST }}
+
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
         with:
