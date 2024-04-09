@@ -29,24 +29,25 @@ jobs:
           cd digital-experts-web
           npm run build 
 
-  deploy:
-    name: Deploy to Server
-    needs: build  # Este job se ejecutará solo si el job 'build' es exitoso
-    runs-on: ubuntu-latest
-    steps:
-      - name: visualizar
-        run: echo "Remote host: ${{ secrets.REMOTE_HOST }}"
+deploy:
+  name: Deploy to Server
+  needs: build  # Este job se ejecutará solo si el job 'build' es exitoso
+  runs-on: ubuntu-latest
+  steps:
+    - name: visualizar
+      run: echo "Remote host: ${{ secrets.REMOTE_HOST }}"
 
-      - name: SSH and Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
-          port: ${{ secrets.REMOTE_PORT }}
-          script: |
-            cd docker/de-web-digital-experts-web
-            git pull
-            docker-compose build
-            docker-compose up -d
+    - name: SSH and Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
+        port: ${{ secrets.REMOTE_PORT }}
+        script: |
+          cd docker/de-web-digital-experts-web
+          git pull
+          docker-compose build
+          docker-compose up -d
+
           
