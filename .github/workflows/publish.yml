@@ -36,7 +36,7 @@ jobs:
     steps:
       - name: visualizar
         run: |
-          echo "Remote host: ${{ secrets.REMOTE_HOST }}"
+          echo "Remote host: ${{ vars.REMOTE_HOST }}"
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
