@@ -22,11 +22,36 @@ export class AppComponent implements OnInit {
     this.onConsent();
   }
 
-  onWhatsAppContact(): void {
-  }
+
 
   onConsent(): void {
     this.pixel.initialize(['1676952112730164']);
+    this.onPageView();
   }
+
+  onCheckout()
+  {
+    this.pixel.track("InitiateCheckout", {
+      content_ids: ["ABC123", "XYZ456"], // Item SKUs
+      value: 100, // Value of all items
+      currency: "USD", // Currency of the value
+    });
+  }
+
+  onPageView()
+  {
+    this.pixel.track("ViewContent", {
+      content_ids: ["ABC123", "XYZ456"], // Item SKUs
+      value: 100, // Value of all items
+      currency: "USD", // Currency of the value
+    });
+  }
+
+  onContact()
+  {
+    this.pixel.track("Contact", {});
+  }
+
+
 
 }
