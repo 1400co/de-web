@@ -35,10 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: visualizar
-        with:
-          Remote: ${{ secrets.REMOTE_HOST }}
-        run: |
-         echo "$Remote"
+         run: echo "Remote host: ${{ secrets.REMOTE_HOST }}"
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
