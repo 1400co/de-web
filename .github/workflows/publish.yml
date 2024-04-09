@@ -11,20 +11,20 @@ jobs:
     runs-on: ubuntu-latest  # Define en qué ambiente se ejecutará este job
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'  # Define la versión de Node.js que necesitas
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Define la versión de Node.js que necesitas
 
-    - name: Install dependencies
+      - name: Install dependencies
         run: |
           cd digital-experts-web
           npm install
 
-    - name: Build the project
+      - name: Build the project
         run: |
           cd digital-experts-web
           npm run build -- --prod
@@ -34,15 +34,16 @@ jobs:
     needs: build  # Este job se ejecutará solo si el job 'build' es exitoso
     runs-on: ubuntu-latest
     steps:
-    - name: SSH and Deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        password: ${{ secrets.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-          cd docker/de-web-digital-experts-web
-          git pull
-          docker-compose build
-          docker-compose up -d
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          password: ${{ secrets.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd docker/de-web-digital-experts-web
+            git pull
+            docker-compose build
+            docker-compose up -d
+          
