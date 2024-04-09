@@ -41,10 +41,10 @@ jobs:
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          password: ${{ secrets.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
-          port: ${{ secrets.REMOTE_PORT }}
+          host: ${{ vars.REMOTE_HOST }}
+          username: ${{ vars.REMOTE_USER }}
+          password: ${{ vars.REMOTE_PASSWORD }}  # Puedes usar 'key' si prefieres autenticación por SSH key
+          port: ${{ vars.REMOTE_PORT }}
           script: |
             cd docker/de-web-digital-experts-web
             git pull
