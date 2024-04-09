@@ -20,10 +20,14 @@ jobs:
         node-version: '18'  # Define la versión de Node.js que necesitas
 
     - name: Install dependencies
-      run: npm install
+        run: |
+          cd digital-experts-web
+          npm install
 
     - name: Build the project
-      run: npm run build 
+        run: |
+          cd digital-experts-web
+          npm run build -- --prod
 
   deploy:
     name: Deploy to Server
